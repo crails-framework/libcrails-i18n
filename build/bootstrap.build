@@ -1,0 +1,7 @@
+project = libcrails-i18n
+
+using version
+using config
+using test
+using install
+using dist

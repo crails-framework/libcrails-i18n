@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcrails-i18n/
+}
+
+export $out_root/libcrails-i18n/$import.target
