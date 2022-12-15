@@ -41,7 +41,7 @@ namespace i18n
     return t_with_fallback_to_default(key).defaults_to<string>(key);
   }
 
-  std::string t(const std::string& key, const std::map<std::string, std::string>& params)
+  string t(const string& key, const map<string, string>& params)
   {
     string value = t(key);
 

@@ -1,4 +1,6 @@
 import intf_libs += libdatatree%lib{datatree}
+import intf_libs += libcrails-semantics%lib{crails-semantics}
+import intf_libs += libcrails-controllers%lib{crails-controllers}
 
 lib{crails-i18n}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
 
@@ -36,6 +38,6 @@ else
 #
 {hxx ixx txx}{*}:
 {
-  install         = include/libcrails-i18n/
+  install         = include/
   install.subdirs = true
 }
