@@ -2,6 +2,7 @@
 # define CRAILS_I18N_CONTROLLER_HPP
 
 # include <crails/controller.hpp>
+# include "../i18n_settings.hpp"
 
 namespace Crails
 {
@@ -9,7 +10,7 @@ namespace Crails
   {
     typedef Crails::Controller Super;
   public:
-    I18nController(Crails::Context& context) : Super(context)
+    I18nController(Crails::Context& context) : Super(context), i18n_settings(i18n::Settings::singleton::require())
     {
     }
 
@@ -20,6 +21,7 @@ namespace Crails
   private:
     std::string find_request_locale() const;
     std::string find_current_locale_from_header() const;
+    const i18n::Settings& i18n_settings;
   };
 }
 

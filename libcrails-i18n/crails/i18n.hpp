@@ -8,14 +8,17 @@
 
 namespace i18n
 {
+  class Settings;
+
   struct I18nData
   {
-    I18nData();
-    I18nData(const std::map<std::string, std::string>&);
+    I18nData(const Settings&);
+    I18nData(const Settings&, const std::map<std::string, std::string>&);
 
     void add_locale(const std::string& locale, const std::string& asset_path);
 
     std::map<std::string, DataTree> data;
+    const Settings& settings;
   };
 
   std::string t(const std::string& key);

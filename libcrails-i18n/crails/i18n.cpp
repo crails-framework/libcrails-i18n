@@ -1,13 +1,14 @@
 #include "i18n.hpp"
+#include "i18n_settings.hpp"
 
 using namespace std;
 using namespace i18n;
 
-I18nData::I18nData()
+I18nData::I18nData(const Settings& settings) : settings(settings)
 {
 }
 
-I18nData::I18nData(const map<string, string>& locales)
+I18nData::I18nData(const Settings& settings, const map<string, string>& locales) : settings(settings)
 {
   for (const auto& locale : locales)
     add_locale(locale.first, locale.second);
@@ -15,23 +16,32 @@ I18nData::I18nData(const map<string, string>& locales)
 
 void I18nData::add_locale(const string& locale, const string& asset_path)
 {
-  string path = Settings::directory + '/' + asset_path;
+  string path = settings.directory + '/' + asset_path;
   auto it = data.find(locale);
   DataTree file_data;
 
-  file_data.from_json_file(path);
-  if (it == data.end())
-    it = data.emplace(locale, DataTree()).first;
-  it->second.as_data().merge(file_data.as_data());
+  try
+  {
+    file_data.from_json_file(path);
+    if (it == data.end())
+      it = data.emplace(locale, DataTree()).first;
+    it->second.as_data().merge(file_data.as_data());
+  }
+  catch (const exception& error)
+  {
+    string message("i18n: failed to load `" + path + '`');
+    throw runtime_error(message + ": " + error.what());
+  }
 }
 
 static Data t_with_fallback_to_default(const std::string& key)
 {
-  const DataTree& data = Settings::t.data.at(Settings::get_current_locale());
+  const Settings& settings = Settings::singleton::require();
+  const DataTree& data = settings.t.data.at(settings.get_current_locale());
 
   if (data[key].exists())
     return data[key];
-  return Settings::t.data.at(Settings::default_locale)[key];
+  return settings.t.data.at(settings.default_locale)[key];
 }
 
 namespace i18n

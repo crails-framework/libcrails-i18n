@@ -44,7 +44,7 @@ void I18nController::initialize()
 
 void I18nController::set_current_locale(const std::string& name)
 {
-  i18n::Settings::current_locale = name;
+  i18n_settings.current_locale = name;
   response.set_header(HttpHeader::content_language, name);
 }
 
@@ -61,7 +61,7 @@ string I18nController::find_current_locale_from_header() const
 
   if (header != request.end())
   {
-    const auto& locales = i18n::Settings::locales;
+    const auto& locales = i18n_settings.locales;
     const auto  options = parse_language_header(header->value().data());
 
     for (const AcceptLocaleOption& option : options)
@@ -72,17 +72,17 @@ string I18nController::find_current_locale_from_header() const
         return *locale;
     }
   }
-  return i18n::Settings::default_locale;
+  return i18n_settings.default_locale;
 }
 
 void I18nController::json_locale()
 {
-  const auto& locales = i18n::Settings::locales;
-  const auto  locale  = params["lang"].defaults_to<string>(i18n::Settings::default_locale);
+  const auto& locales = i18n_settings.locales;
+  const auto  locale  = params["lang"].defaults_to<string>(i18n_settings.default_locale);
   auto it = find(locales.begin(), locales.end(), locale);
 
   if (it != locales.end())
-    render(JSON, i18n::Settings::t.data.at(locale).as_data());
+    render(JSON, i18n_settings.t.data.at(locale).as_data());
   else
     respond_with(HttpStatus::not_found);
 }

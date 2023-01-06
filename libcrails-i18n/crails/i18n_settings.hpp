@@ -3,19 +3,24 @@
 
 # include <vector>
 # include <string>
+# include <crails/utils/singleton.hpp>
 # include "i18n.hpp"
 
 namespace i18n
 {
-  struct Settings
+  class Settings
   {
-    static const std::string              directory;
-    static const std::string              default_locale;
-    static const std::vector<std::string> locales;
-    static thread_local std::string       current_locale;
+    SINGLETON(Settings)
+  protected:
+    Settings() : t(*this) {}
+  public:
+    std::string                     directory;
+    std::string                     default_locale;
+    std::vector<std::string>        locales;
+    static thread_local std::string current_locale;
+    I18nData                        t;
 
-    static const std::string& get_current_locale() { return current_locale != "" ? current_locale : default_locale; }
-    static const I18nData t;
+    const std::string& get_current_locale() const { return current_locale != "" ? current_locale : default_locale; }
   };
 }
 
