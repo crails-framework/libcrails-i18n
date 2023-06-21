@@ -18,7 +18,7 @@ cxx.poptions =+ "-I$out_root" "-I$src_root"
 #
 lib{crails-i18n}:
 {
-  cxx.export.poptions = "-I$out_root" "-I$src_root"
+  cxx.export.poptions = "-I$out_root/libcrails-i18n/" "-I$src_root/libcrails-i18n/"
   cxx.export.libs = $intf_libs
 }
 
