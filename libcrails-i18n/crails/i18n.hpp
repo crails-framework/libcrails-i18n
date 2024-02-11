@@ -21,6 +21,8 @@ namespace i18n
     const Settings& settings;
   };
 
+  const std::string& locale_name();
+
   std::string t(const std::string& key);
 
   std::string t(const std::string& key, const std::map<std::string, std::string>& params);
