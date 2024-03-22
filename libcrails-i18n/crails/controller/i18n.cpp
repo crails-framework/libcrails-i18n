@@ -12,8 +12,8 @@ struct AcceptLocaleOption
   string name;
   double quality_value = 1;
 
-  bool operator>(const AcceptLocaleOption& compare) const { return quality_value > compare.quality_value; }
-  bool operator<(const AcceptLocaleOption& compare) const { return quality_value < compare.quality_value; }
+  bool operator>(const AcceptLocaleOption& compare) const { return quality_value < compare.quality_value; }
+  bool operator<(const AcceptLocaleOption& compare) const { return quality_value > compare.quality_value; }
 };
 
 static vector<AcceptLocaleOption> parse_language_header(const string_view header)
