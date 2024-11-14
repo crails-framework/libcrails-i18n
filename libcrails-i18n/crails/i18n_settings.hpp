@@ -19,6 +19,7 @@ namespace i18n
     std::vector<std::string>        locales;
     static thread_local std::string current_locale;
     I18nData                        t;
+    bool                            use_localized_strings = false;
 
     const std::string& get_current_locale() const { return current_locale != "" ? current_locale : default_locale; }
   };
