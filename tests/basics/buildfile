@@ -1,0 +1,8 @@
+import libs = libcrails-i18n%lib{crails-i18n}
+import libs += libcrails%lib{crails}
+import intf_libs += libdatatree%lib{datatree}
+import intf_libs += libcrails-semantics%lib{crails-semantics}
+import intf_libs += libcrails-controllers%lib{crails-controllers}
+import intf_libs += libcrails-design-patterns%lib{crails-design-patterns}
+
+exe{driver}: {hxx ixx txx cxx}{**} $libs testscript{**}
