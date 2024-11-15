@@ -5,9 +5,10 @@
 using namespace std;
 using namespace i18n;
 
+static const string undefined_name = "null";
+
 static const std::string& get_locale_name()
 {
-  static const string undefined_name = "null";
   const auto& settings = Settings::singleton::require();
   const string& name = settings.get_current_locale();
 
@@ -57,7 +58,7 @@ String& String::operator=(const string_view val)
   return *this;
 }
 
-std::string String::to_string() const
+string String::to_string() const
 {
   const Data data = as_data();
   const Data default_value = data[get_locale_name()];
@@ -72,4 +73,14 @@ std::string String::to_string() const
       return data[*keys.begin()];
   }
   return "";
+}
+
+vector<string> String::available_locales() const
+{
+  vector<string> list = as_data().get_keys();
+
+  list.erase(
+    remove(list.begin(), list.end(), undefined_name)
+  );
+  return list;
 }

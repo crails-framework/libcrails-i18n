@@ -105,6 +105,23 @@ int main()
     assert(string["fr"].as<std::string>() == "Coucou petite perruche");
     cleanup();
   }
+
+  // Lists available locales
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+    std::vector<std::string> list;
+
+    i18n_settings->use_localized_strings = true;
+    i18n_settings->default_locale = "fr";
+    string["fr"] = "Suis-je bien chez ce cher Serge ?";
+    string["es"] = "Que triste estas, Tristan, con tan tetrica trama teatral!";
+    string["null"] = "Defined when locales were disabled";
+    list = string.available_locales();
+    assert(std::find(list.begin(), list.end(), "fr") != list.end());
+    assert(std::find(list.begin(), list.end(), "es") != list.end());
+    assert(std::find(list.begin(), list.end(), "null") == list.end());
+  }
  
   return 0;
 }
