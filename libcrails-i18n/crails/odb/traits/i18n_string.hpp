@@ -1,4 +1,5 @@
 #pragma once
+#include <cstring>
 #include "../../i18n_string.hpp"
 
 namespace odb
@@ -39,11 +40,9 @@ namespace odb
 
           is_null = false;
           n = as_string.size();
-          std::memcopy(b.data(), as_string.c_str(), n);
+          std::memcpy(b.data(), as_string.c_str(), n);
         }
       }
     };
   }
 }
-
-#endif
