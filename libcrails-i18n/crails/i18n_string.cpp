@@ -60,19 +60,7 @@ String& String::operator=(const string& val)
 
 String& String::operator=(const string_view val)
 {
-  cout << "DEBUG i18n::String::operator=" << endl;
-  cout << get_locale_name() << endl;
-  cout << "DEBUG #1" << endl;
-  cout << val << endl;
-  cout << "DEBUG #2" << endl;
-  cout << as_data().exists() << endl;
-  cout << "DEBUG #3" << endl;
-  cout << as_data()[get_locale_name()].exists() << endl;
-  cout << "DEBUG #4" << endl;
-  as_data()["toto"] = val;
-  cout << "DEBUG #5" << endl;
   as_data()[get_locale_name()] = val;
-  cout << "DEBUT should've crashed by now" << endl;
   return *this;
 }
 
@@ -91,6 +79,11 @@ string String::to_string() const
       return data[*keys.begin()];
   }
   return "";
+}
+
+bool String::has_translation() const
+{
+  return !(as_data()[get_locale_name()].is_blank());
 }
 
 vector<string> String::available_locales() const

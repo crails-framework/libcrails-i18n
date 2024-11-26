@@ -13,6 +13,7 @@ namespace i18n
     String(Data item) { as_data().merge(item); }
 
     static bool is_localized();
+    bool has_translation() const;
 
     void initialize(const std::string&);
     void from_data(Data);

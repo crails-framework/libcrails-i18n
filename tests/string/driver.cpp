@@ -60,6 +60,25 @@ int main()
     cleanup();
   }
 
+  // Properly report existing translation in the current locale
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+
+    i18n_settings->use_localized_strings = true;
+
+    i18n_settings->default_locale = "fr";
+    assert(string.has_translation() == false);
+    string = std::string_view("Suis-je bien chez ce cher Serge ?");
+    assert(string.has_translation() == true);
+
+    i18n_settings->current_locale = "es";
+    assert(string.has_translation() == false);
+    string = std::string("Que triste estas, Tristan, con tan tetrica trama teatral!");
+    assert(string.has_translation() == true);
+    cleanup();
+  }
+
   // Renders as string according to the current locale
   {
     SingletonInstantiator<i18n::Settings> i18n_settings;
