@@ -23,6 +23,15 @@ int main()
     assert(i18n::String::is_localized() == false);
   }
 
+  // Default constructor works
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+
+    assert(string.to_string().length() == 0);
+    assert(string.available_locales().size() == 0);
+  }
+
   // When localized string are disabled, behaves as a regular string
   {
     SingletonInstantiator<i18n::Settings> i18n_settings;

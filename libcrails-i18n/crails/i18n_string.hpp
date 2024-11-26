@@ -8,7 +8,7 @@ namespace i18n
   struct String : public DataTree
   {
     String() {}
-    String(const std::string& base_value) { initialize(base_value); }
+    String(const std::string& base_value);
     String(const String& copy) { as_data().merge(copy); }
     String(Data item) { as_data().merge(item); }
 
