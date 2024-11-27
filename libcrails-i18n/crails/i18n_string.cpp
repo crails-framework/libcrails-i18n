@@ -20,7 +20,7 @@ ostream& operator<<(ostream& stream, const i18n::String& value)
 {
   return stream << value.to_string();
 }
-    
+
 String::String(const std::string& base_value)
 {
   initialize(base_value);

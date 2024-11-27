@@ -150,6 +150,19 @@ int main()
     assert(std::find(list.begin(), list.end(), "es") != list.end());
     assert(std::find(list.begin(), list.end(), "null") == list.end());
   }
+
+  // Copy constructor
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String source, target;
+    std::vector<std::string> list;
+
+    i18n_settings->use_localized_strings = true;
+    i18n_settings->default_locale = "fr";
+    source["fr"] = "Suis-je bien chez ce cher Serge ?";
+    target = source;
+    assert(target.to_string() == "Suis-je bien chez ce cher Serge ?");
+  }
  
   return 0;
 }
