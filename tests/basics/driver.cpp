@@ -1,9 +1,6 @@
 #include <crails/i18n_string.hpp>
 #include <crails/i18n.hpp>
 
-#include <crails/environment.hpp>
-namespace Crails { Environment environment = Production; }
-
 #undef NODEBUG
 #include <cassert>
 
