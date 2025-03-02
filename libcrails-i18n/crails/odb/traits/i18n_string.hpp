@@ -1,6 +1,7 @@
 #pragma once
-#include <cstring>
-#include "../../i18n_string.hpp"
+#ifndef TWILIDOC
+# include <cstring>
+# include "../../i18n_string.hpp"
 
 namespace odb
 {
@@ -46,3 +47,4 @@ namespace odb
     };
   }
 }
+#endif
