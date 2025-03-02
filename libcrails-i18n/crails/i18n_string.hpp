@@ -21,6 +21,7 @@ namespace i18n
     String& operator=(const std::string& val); 
     operator std::string() const { return to_string(); }
 
+    std::string to_localized_string(const std::string& name) const;
     std::string to_string() const;
     std::vector<std::string> available_locales() const; 
   };

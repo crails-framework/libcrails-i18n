@@ -64,6 +64,15 @@ String& String::operator=(const string_view val)
   return *this;
 }
 
+string String::to_localized_string(const string& name) const
+{
+  const Data data = as_data()[name];
+
+  if (data.exists())
+    return data.as<string>();
+  return string();
+}
+
 string String::to_string() const
 {
   const Data data = as_data();
