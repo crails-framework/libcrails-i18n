@@ -62,7 +62,7 @@ string I18nController::find_current_locale_from_header() const
   if (header != request.end())
   {
     const auto& locales = i18n_settings.locales;
-    const auto& value   = header->value();
+    const auto  value   = header->value();
     const auto  options = parse_language_header(string_view(value.data(), value.length()));
 
     for (const AcceptLocaleOption& option : options)
