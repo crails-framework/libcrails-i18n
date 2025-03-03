@@ -46,11 +46,22 @@ static Data t_with_fallback_to_default(const std::string& key)
 
 namespace i18n
 {
-  const string& locale_name()
-  {
-    const Settings& settings = Settings::singleton::require();
+  static const string null_locale_name;
+  static const vector<string> null_locale_names;
 
-    return settings.get_current_locale();
+  const string& locale_name() noexcept
+  {
+    const Settings* settings = Settings::singleton::get();
+
+    return settings ? settings->get_current_locale() : null_locale_name;
+  }
+
+  const vector<string>& locale_names() noexcept
+  {
+    static const vector<string> null_result;
+    const Settings* settings = Settings::singleton::get();
+
+    return settings ? settings->locales : null_locale_names;
   }
 
   string t(const string& key)

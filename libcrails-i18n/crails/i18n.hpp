@@ -21,7 +21,8 @@ namespace i18n
     const Settings& settings;
   };
 
-  const std::string& locale_name();
+  const std::string& locale_name() noexcept;
+  const std::vector<std::string>& locale_names() noexcept;
 
   std::string t(const std::string& key);
 
