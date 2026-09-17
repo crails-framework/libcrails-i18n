@@ -3,14 +3,15 @@
 #include <crails/context.hpp>
 #include <crails/utils/split.hpp>
 #include <string>
+#include <charconv>
 
 using namespace std;
 using namespace Crails;
 
 struct AcceptLocaleOption
 {
-  string name;
-  double quality_value = 1;
+  string_view name;
+  double      quality_value = 1;
 
   bool operator>(const AcceptLocaleOption& compare) const { return quality_value < compare.quality_value; }
   bool operator<(const AcceptLocaleOption& compare) const { return quality_value > compare.quality_value; }
@@ -18,18 +19,21 @@ struct AcceptLocaleOption
 
 static vector<AcceptLocaleOption> parse_language_header(const string_view header)
 {
-  auto declarations = Crails::split(header, ',');
+  auto declarations = Crails::split<std::string_view, std::vector<std::string_view>>(header, ',');
   vector<AcceptLocaleOption> options;
 
   options.reserve(declarations.size());
   for (const auto& declaration : declarations)
   {
     AcceptLocaleOption option;
-    auto parts = Crails::split(declaration, ';');
+    auto parts = Crails::split<std::string_view, std::vector<std::string_view>>(declaration, ';');
 
     option.name = *parts.begin();
     if (parts.size() > 1 && parts.rbegin()->find("q=") == 0)
-      option.quality_value = stod(parts.rbegin()->substr(2).data());
+    {
+      string_view quality_str = parts.rbegin()->substr(2);
+      from_chars(quality_str.begin(), quality_str.end(), option.quality_value);
+    }
     options.push_back(option);
   }
   sort(options.begin(), options.end());
