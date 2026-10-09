@@ -49,7 +49,13 @@ void String::initialize(const string& base_value)
 
 void String::from_data(Data data)
 {
-  initialize(data.defaults_to<string>(""));
+  if (data.count() > 0)
+  {
+    clear();
+    as_data().merge(data);
+  }
+  else
+    initialize(data.defaults_to<string>(""));
 }
 
 String& String::operator=(const string& val)

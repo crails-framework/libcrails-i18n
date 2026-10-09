@@ -160,6 +160,75 @@ int main()
     target = source;
     assert(target.to_string() == "Suis-je bien chez ce cher Serge ?");
   }
+
+  // from_data with localized strings enabled
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+    DataTree data;
+
+    i18n_settings->use_localized_strings = true;
+    i18n_settings->default_locale = "fr";
+
+    data["fr"] = "Coucou petite perruche";
+    assert(data.as_data().count() == 1);
+    string.from_data(data);
+    assert(string.to_string() == "Coucou petite perruche");
+
+    cleanup();
+  }
+
+  // from_data with localized strings disabled
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+    DataTree data;
+
+    i18n_settings->use_localized_strings = false;
+    i18n_settings->default_locale = "fr";
+
+    data["fr"] = "Coucou petite perruche";
+    string.from_data(data);
+    assert(string.to_string() == "Coucou petite perruche");
+
+    cleanup();
+  }
+
+  // from_data receiving a string
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+    DataTree data;
+
+    i18n_settings->use_localized_strings = false;
+    i18n_settings->default_locale = "fr";
+
+    data["fr"] = "Coucou petite perruche";
+    string.from_data(data["fr"]);
+    assert(string.to_string() == "Coucou petite perruche");
+
+    cleanup();
+  }
+
+  // from_data replaces the tree when receiving data
+  {
+    SingletonInstantiator<i18n::Settings> i18n_settings;
+    i18n::String string;
+    DataTree data;
+
+    i18n_settings->use_localized_strings = true;
+    i18n_settings->default_locale = "fr";
+
+    string["fr"] = "tintin";
+    string["es"] = "toto";
+
+    data["fr"] = "Coucou petite perruche";
+    string.from_data(data);
+    assert(string.to_string() == "Coucou petite perruche");
+    assert(string["es"].exists() == false);
+
+    cleanup();
+  }
  
   return 0;
 }
