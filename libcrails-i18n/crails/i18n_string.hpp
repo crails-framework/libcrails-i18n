@@ -19,6 +19,7 @@ namespace i18n
     void from_data(Data);
     String& operator=(const std::string_view val);
     String& operator=(const std::string& val); 
+    String& operator=(const String& str) { if (this != &str) { clear(); as_data().merge(str); } return *this; }
     operator std::string() const { return to_string(); }
 
     std::string to_localized_string(const std::string& name) const;
